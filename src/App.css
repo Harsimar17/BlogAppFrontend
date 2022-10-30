@@ -1,6 +1,9 @@
 .App {
   text-align: center;
 }
+body {
+  background-color: #d3d3d3;
+}
 
 .App-logo {
   height: 40vmin;
@@ -34,5 +37,20 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* .scroll {
+  overflow: scroll;
+
+  height: 750px;
+  width: auto;
+} */
+body {
+  padding-top: 70px;
+}
+@media screen and (min-width: 768px) {
+  body {
+    padding-top: 100px;
   }
 }

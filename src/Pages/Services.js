@@ -1,5 +1,10 @@
 import React from "react";
+import Base from "../components/Base";
 
 export default function Services() {
-  return <div>Services page</div>;
+  return (
+    <Base>
+      <div>Services page</div>
+    </Base>
+  );
 }

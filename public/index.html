@@ -10,6 +10,9 @@
       content="Web site created using create-react-app"
       />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
+      rel="stylesheet">
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -30,6 +33,25 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <style>
+      
+        .imgsh {
+  max-width: 20%;
+  border: 10px black;
+  
+
+}
+
+.image {
+  flex-basis: 40%;
+  border: 2px black;
+}
+
+.text {
+  font-size: 20px;
+  padding-left: 20px;
+}
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -49,4 +71,30 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
+  <script>function onWindowClosing() {
+    if (window.event.clientX < 0 || window.event.clientY < 0) {
+        $.ajax({
+            type: "POST",
+            url: "/Account/OnWindowClosing"
+        });
+    }
+};
+
+function onKeydown(evt) {
+    if (evt != undefined && evt.altKey && evt.keyCode == 115) //Alt + F4 
+    {
+        $.ajax({
+            type: "POST",
+            url: "/Account/OnWindowClosing"
+        });
+    }
+};
+
+window.onbeforeunload = onWindowClosing;
+window.document.onkeydown = onKeydown; 
+</script>
 </html>

@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { doLogout, fetchDetails, isLogin } from "../auth/Index";
+import { allPost } from "../services/Service";
+// import { NavLink as ReactLink } from "react-router-dom";
+
 // import { NavLink as REa} from "react-router-dom";
 
 export default function NavBar() {
+  const [login, setlogin] = useState(false);
+  const navigate = useNavigate();
+  const [detail, setdetail] = useState(undefined);
+  const [lst, setlst] = useState(undefined)
+  useEffect(() => {
+    setlogin(isLogin());
+    setdetail(fetchDetails());
+    allPost().then((data)=>{
+      setlst(data)
+    })
+  }, [login,lst]);
+
+  const logOut = () => {
+    doLogout(() => {
+      setlogin(false);
+      navigate("/");
+    });
+  };
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-light">
-        <div className="container-fluid bg-light">
-          {/* <Link className="navbar-brand" to="#"> */}
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top ">
+        <div className="container-fluid bg-dark">
           <button
             className="navbar-toggler"
             type="button"
@@ -19,32 +41,33 @@ export default function NavBar() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul className="navbar-nav  mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/login">
-                 Login
-                </a>
+                <Link className="nav-link active" to="/home">
+                  Blog App ({lst ? lst.totalelements:0})
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/signup">
-                  Signup
-                </a>
+                <Link className="nav-link " to="/newFeed">
+                  New feed
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/about">
+                <Link className="nav-link" to="/about">
                   About
-                </a>
+                </Link>
               </li>
+
               <li className="nav-item dropdown">
-                <a
+                <Link
                   className="nav-link dropdown-toggle"
-                  href="#"
+                  to="#"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
                   Dropdown
-                </a>
+                </Link>
                 <ul className="dropdown-menu">
                   <li>
                     <a className="dropdown-item" href="/service">
@@ -52,7 +75,7 @@ export default function NavBar() {
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item" href="/home">
                       Another action
                     </a>
                   </li>
@@ -60,15 +83,60 @@ export default function NavBar() {
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item" href="/home">
                       Something else here
                     </a>
                   </li>
                 </ul>
               </li>
-              <li className="nav-item">
-                <a className="nav-link disabled">Disabled</a>
-              </li>
+            </ul>
+            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              {login === false && (
+                <li className="nav-item" key="lin">
+                  <Link className="nav-link " aria-current="page" to="/login">
+                    Login
+                  </Link>
+                </li>
+              )}
+              {login && (
+                <>
+                  <li className="nav-item" key="hm">
+                    <Link
+                      className="nav-link "
+                      aria-current="page"
+                      to="/user/info"
+                    >
+                      Profile info
+                    </Link>
+                  </li>
+                  <li className="nav-item" key="pg">
+                    <Link
+                      className="nav-link active"
+                      aria-current="page"
+                      to="/user/dashboard"
+                    >
+                      Hello {detail.name.toUpperCase()}
+                    </Link>
+                  </li>
+                  <li className="nav-item" key="lt">
+                    <a
+                      onClick={logOut}
+                      className="nav-link "
+                      aria-current="page"
+                      href="/login"
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </>
+              )}
+              {login === false && (
+                <li className="nav-item">
+                  <Link className="nav-link " to="/signup">
+                    Signup
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>

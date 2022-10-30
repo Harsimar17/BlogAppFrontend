@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { doLogin } from "../auth/Index";
+import Base from "../components/Base";
 import { loginU } from "../services/Service";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [loginDetails, setloginDetails] = useState({
     username: "",
     password: "",
@@ -24,54 +28,59 @@ export default function Login() {
     }
     loginU(loginDetails).then((token) => {
       console.log(token);
+      doLogin(token, () => {
+        navigate("/user/dashboard");
+      });
+
       toast.success("success");
     });
   };
 
   return (
-    <div className="container  ">
-      <div className="card">
-        <div className="card-body">
-          <p className="card-text">
-            <form onSubmit={submitForm}>
-              <div className="mb-3">
-                <label for="exampleInputEmail1" className="form-label">
-                  Email address
-                </label>
-                <input
-                  onChange={(e) => handlChange(e, "username")}
-                  type="email"
-                  className="form-control"
-                  id="exampleInputEmail1"
-                  placeholder="Enter email"
-                  aria-describedby="emailHelp"
-                  value={loginDetails.username}
-                />
-                <div id="emailHelp" className="form-text">
-                  We'll never share your email with anyone else.
+    <Base>
+      <div className="container " style={{ "margin-top": "50px" }}>
+        <div className="card">
+          <div className="card-body">
+          <h1  align='left'><i>Login here...</i></h1><br/>
+            <p className="card-text">
+              <form onSubmit={submitForm}>
+                <div className="mb-3" align="left">
+                  <label for="exampleInputEmail1" className="form-label">
+                    <h3>Email address</h3>
+                  </label>
+                  <input
+                    onChange={(e) => handlChange(e, "username")}
+                    type="email"
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    placeholder="Enter email"
+                    aria-describedby="emailHelp"
+                    value={loginDetails.username}
+                  />
+                  
                 </div>
-              </div>
-              <div className="mb-3">
-                <label for="exampleInputPassword1" className="form-label">
-                  Password
-                </label>
-                <input
-                  onChange={(e) => handlChange(e, "password")}
-                  type="password"
-                  className="form-control"
-                  id="exampleInputPassword1"
-                  placeholder="Enter password"
-                  value={loginDetails.password}
-                />
-              </div>
+                <div className="mb-3" align="left">
+                  <label for="exampleInputPassword1" className="form-label" >
+                    <h3>Password</h3>
+                  </label>
+                  <input
+                    onChange={(e) => handlChange(e, "password")}
+                    type="password"
+                    className="form-control"
+                    id="exampleInputPassword1"
+                    placeholder="Enter password"
+                    value={loginDetails.password}
+                  />
+                </div>
 
-              <button type="submit" className="btn btn-dark">
-                Submit
-              </button>
-            </form>
-          </p>
+                <button type="submit" className="btn btn-dark">
+                  Submit
+                </button>
+              </form>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </Base>
   );
 }
