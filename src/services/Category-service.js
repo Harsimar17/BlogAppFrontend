@@ -4,3 +4,8 @@ export const cAt = () => {
     return response.data;
   });
 };
+export const postByctgryId = (cid) => {
+  return myaxios.get(`/api/category/${cid}/posts`).then((resp) => {
+    return resp.data;
+  });
+};

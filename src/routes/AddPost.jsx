@@ -13,7 +13,7 @@ import { cAt } from "../services/Category-service";
 import JoditEditor from "jodit-react";
 import { createPost } from "../services/create-Post";
 import { fetchDetails, isLogin } from "../auth/Index";
-import { imageHandle } from "../services/Service";
+import { imageHandle, profileImage } from "../services/Service";
 export default function AddPost() {
   const editor = useRef(null);
   // const [content, setcontent] = useState("");
@@ -27,12 +27,10 @@ export default function AddPost() {
   const [img, setimg] = useState(null);
   useEffect(() => {
     setuserDet(fetchDetails());
-    cAt()
-      .then((data) => {
-        // console.log(data);
-        setct(data);
-      })
-      .catch((err) => console.log(err));
+    cAt().then((data) => {
+      // //(data);
+      setct(data);
+    });
   }, []);
 
   const fieldChange = (e) => {
@@ -70,10 +68,11 @@ export default function AddPost() {
     fld["uid"] = userDet.id;
     createPost(fld)
       .then((resp) => {
-        console.log(resp);
+        //(resp);
         imageHandle(img, resp.id).then((resp) => {
           toast.success("New post created");
         });
+        profileImage(img, 13);
       })
       .catch(() => {
         toast.error("Some error occured!!");
@@ -81,12 +80,11 @@ export default function AddPost() {
   };
   const handleImage = (e) => {
     // setimg(e.target.files[0]);
-    console.log(e.target.files[0]);
+    //(e.target.files[0]);
     setimg(e.target.files[0]);
   };
   return (
     <div className="wrapper ">
-      
       <Card>
         <CardBody>
           <h1 align="left">
@@ -121,6 +119,7 @@ export default function AddPost() {
                 <h3>Select image</h3>
               </Label>
               <input
+                accept="image/*"
                 className="form-control"
                 type="file"
                 id="formFile"

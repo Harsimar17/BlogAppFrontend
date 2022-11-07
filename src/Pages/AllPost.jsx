@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Base from "../components/Base";
-import { allPost } from "../services/Service";
+import { allPost, deletePost } from "../services/Service";
 import PostContent from "./PostContent";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "./Spinner";
@@ -29,6 +29,14 @@ export default function AllPost() {
       //   console.log(resp);
     });
   };
+  const delPost = (post) => {
+    // console.log(pstsUser.id);
+    deletePost(post.id).then((resp) => {
+      console.log(resp);
+      let newPost = posts.content.filter((p) => p.id !== post.id);
+      setposts({ ...posts, content: newPost });
+    });
+  };
   const fetchmoreDetails = () => {
     setcpage(cpage + 1);
     console.log(posts.totalelement);
@@ -36,14 +44,16 @@ export default function AllPost() {
 
   return (
     <Base>
-      <h1>
-        <span className="badge text-bg-dark " style={{ fontSize: "60px" }}>
+      {/* <h1 className="badge text-bg-dark">
+        <span className=" " style={{ fontSize: "60px" }}>
           All New Posts...
         </span>
-      </h1>
+      </h1> */}
       <div className="container">
         <h1 align="left" style={{ marginLeft: "13px" }}>
-          <span className="badge text-bg-dark">{posts.totalelement} NEW POSTS</span>
+          <span className="badge text-bg-dark">
+            {posts.totalelement} NEW POSTS
+          </span>
         </h1>
         <InfiniteScroll
           hasMore={!posts.lpage}
@@ -51,9 +61,13 @@ export default function AllPost() {
           dataLength={posts.content.length}
           loader={<Spinner />}
         >
-          {posts.content.map((post,index) => (
+          {posts.content.map((post, index) => (
             <div>
-              <PostContent post={post} cont={posts.content[index]} />
+              <PostContent
+                post={post}
+                cont={posts.content[index]}
+                del={delPost}
+              />
               <br />
             </div>
           ))}

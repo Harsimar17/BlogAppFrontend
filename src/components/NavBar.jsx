@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { doLogout, fetchDetails, isLogin } from "../auth/Index";
+// import Modalcomp from "../Pages/Modal";
 import { allPost } from "../services/Service";
 // import { NavLink as ReactLink } from "react-router-dom";
 
@@ -29,6 +30,7 @@ export default function NavBar() {
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top ">
         <div className="container-fluid bg-dark">
+          {/* <Modalcomp/> */}
           <button
             className="navbar-toggler"
             type="button"
@@ -104,7 +106,7 @@ export default function NavBar() {
                     <Link
                       className="nav-link "
                       aria-current="page"
-                      to="/user/info"
+                      to={`/user/info/${detail.id}`}
                     >
                       Profile info
                     </Link>
