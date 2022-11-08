@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { doLogout, fetchDetails, isLogin } from "../auth/Index";
+import { BASE_URL } from "../services/Helper";
 // import Modalcomp from "../Pages/Modal";
 import { allPost } from "../services/Service";
 // import { NavLink as ReactLink } from "react-router-dom";
@@ -11,14 +12,15 @@ export default function NavBar() {
   const [login, setlogin] = useState(false);
   const navigate = useNavigate();
   const [detail, setdetail] = useState(undefined);
-  const [lst, setlst] = useState(undefined)
+  const [lst, setlst] = useState(undefined);
   useEffect(() => {
     setlogin(isLogin());
     setdetail(fetchDetails());
-    allPost().then((data)=>{
-      setlst(data)
-    })
-  }, [login,lst]);
+    console.log(fetchDetails().imagename);
+    allPost().then((data) => {
+      setlst(data);
+    });
+  }, [login, lst]);
 
   const logOut = () => {
     doLogout(() => {
@@ -27,8 +29,8 @@ export default function NavBar() {
     });
   };
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top ">
+    <div className="" >
+      <nav className="navbar-nav ms-auto mb-2 mb-lg-0 nav-item navbar navbar-expand-lg navbar-dark bg-dark fixed-top " > 
         <div className="container-fluid bg-dark">
           {/* <Modalcomp/> */}
           <button
@@ -44,23 +46,24 @@ export default function NavBar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav  mb-2 mb-lg-0">
-              <li className="nav-item">
+              <li className="nav-item" style={{ display: "flex", marginRight: "10px" }}>
                 <Link className="nav-link active" to="/home">
-                  Blog App ({lst ? lst.totalelements:0})
+                  Blog App ({lst ? lst.totalelements : 0})
                 </Link>
+                {/* {isLogin() && <img />} */}
               </li>
-              <li className="nav-item">
+              <li className="nav-item" style={{ display: "flex", marginRight: "10px" }} >
                 <Link className="nav-link " to="/newFeed">
                   New feed
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item" style={{ display: "flex", marginRight: "10px" }}>
                 <Link className="nav-link" to="/about">
                   About
                 </Link>
               </li>
 
-              <li className="nav-item dropdown">
+              <li className="nav-item dropdown" style={{ display: "flex", marginRight: "10px" }}>
                 <Link
                   className="nav-link dropdown-toggle"
                   to="#"
@@ -92,7 +95,7 @@ export default function NavBar() {
                 </ul>
               </li>
             </ul>
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 "  >
               {login === false && (
                 <li className="nav-item" key="lin">
                   <Link className="nav-link " aria-current="page" to="/login">
@@ -102,7 +105,7 @@ export default function NavBar() {
               )}
               {login && (
                 <>
-                  <li className="nav-item" key="hm">
+                  <li className="nav-item" key="hm" style={{ display: "flex", marginRight: "10px" }}>
                     <Link
                       className="nav-link "
                       aria-current="page"
@@ -111,16 +114,31 @@ export default function NavBar() {
                       Profile info
                     </Link>
                   </li>
-                  <li className="nav-item" key="pg">
+                  <li
+                    className="nav-item"
+                    style={{ display: "flex", marginRight: "10px" }}
+                    key="pg"
+                  >
                     <Link
                       className="nav-link active"
                       aria-current="page"
                       to="/user/dashboard"
                     >
-                      Hello {detail.name.toUpperCase()}
+                      <b>Signed in as</b> {detail.name.toUpperCase()}
+                    </Link>
+                    <Link to={`/user/info/${detail.id}`}>
+                      <img
+                        width={50}
+                        style={{ marginTop: "2px" }}
+                        id="image-selector"
+                        className="rounded-circle img-responsive border border-3 border-success "
+                        src={`${BASE_URL}/profile/image/${
+                          fetchDetails().imagename
+                        }`}
+                      />
                     </Link>
                   </li>
-                  <li className="nav-item" key="lt">
+                  <li className="nav-item" key="lt" style={{ display: "flex", }}>
                     <a
                       onClick={logOut}
                       className="nav-link "

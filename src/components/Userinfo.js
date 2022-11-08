@@ -15,6 +15,7 @@ export default function Userinfo() {
     // console.log(JSON.parse(localStorage.getItem("data")));
     // console.log(fetchDetails().set[0].name);
     setuserDetails(fetchDetails());
+    console.log(fetchDetails());
   }, [ ]);
   const handleProfile = (e) => {
     // e.preventDefault();
@@ -67,9 +68,8 @@ export default function Userinfo() {
                 id="image-selector"
                 className="rounded-circle img-responsive border border-5 "
                 src={
-                  img == null
-                    ? `${BASE_URL}/profile/image/${userDetails.imagename}`
-                    : URL.createObjectURL(img)
+                  `${BASE_URL}/profile/image/${userDetails.imagename}`
+                  
                 }
               />
               <br />

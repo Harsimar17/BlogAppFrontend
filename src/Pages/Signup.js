@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Spring } from "../services/Service";
+import { profileImage, Spring } from "../services/Service";
 import { toast } from "react-toastify";
+import def from "./default.jpg";
 import Base from "../components/Base";
 export default function Signup() {
+  const [img, setimg] = useState({
+    pic: false,
+    src: false,
+  });
   const [data, setdata] = useState({
     name: "",
     email: "",
@@ -21,9 +26,12 @@ export default function Signup() {
   const submitForm = (e) => {
     e.preventDefault();
     console.log(data);
+
     Spring(data)
-      .then(() => {
+      .then((resp) => {
         toast.success("Registerd successfully");
+        console.log(resp);
+        profileImage(img.src, resp.id);
       })
       .catch(() => {
         toast.error("Therre is some error");
@@ -41,6 +49,18 @@ export default function Signup() {
                   <h3 className="mb-4 pb-2 pb-md-0 mb-md-5">
                     Registration Form
                   </h3>
+                  <div align="left">
+                    <img
+                      style={{ maxWidth: "20%", marginBottom: "10px" }}
+                      id="image-selector"
+                      className="rounded-circle img-responsive border border-5 "
+                      src={img.pic ? img.pic : def}
+                    />
+                    <br/>
+                    <p style={{marginTop:"2px"}} className="blockquote-footer">This is a default profile pic.<br/>Click below to change it.</p>
+                  </div>
+                  <br />
+
                   <form className="" onSubmit={submitForm}>
                     <div className="row">
                       <div className="col-md-6 mb-4">
@@ -56,6 +76,12 @@ export default function Signup() {
                         </div>
                       </div>
                       <div className="col-md-6 mb-4">
+                        {/* <img
+                          style={{ maxWidth: "20%" }}
+                          id="image-selector"
+                          className="rounded-circle img-responsive border border-5 "
+                          src={img.pic?img.pic:def}
+                        /> */}
                         <div className="form-outline">
                           <input
                             onChange={(e) => nameChange(e, "email")}
@@ -64,6 +90,21 @@ export default function Signup() {
                             className="form-control form-control-lg"
                             placeholder="Enter email"
                             value={data.email}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6 mb-4">
+                        <div className="form-outline">
+                          <input
+                            onChange={(e) =>
+                              setimg({
+                                pic: URL.createObjectURL(e.target.files[0]),
+                                src: e.target.files[0],
+                              })
+                            }
+                            type="file"
+                            if="files"
+                            className="form-control form-control-lg"
                           />
                         </div>
                       </div>
