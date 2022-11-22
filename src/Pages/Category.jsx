@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Base from "../components/Base";
-import { ctgryById, postByctgryId } from "../services/Category-service";
+import { postByctgryId } from "../services/Category-service";
 import PostContent from "./PostContent";
 import SideMenu from "./SideMenu";
 
@@ -11,7 +11,6 @@ export default function Category() {
   const [ctgryList, setctgryList] = useState([]);
   useEffect(() => {
     postByctgryId(Object.values(params)).then((resp) => {
-    //   console.log(resp);
       setctgryList(resp);
     });
   }, [ctgryList]);
@@ -30,15 +29,16 @@ export default function Category() {
                 {ctgryList.length} NEW POSTS
               </span>
             </h1>
-            {ctgryList && ctgryList.map((data, index) => {
-              return (
-                <div>
-                  <PostContent post={data} cont={ctgryList[index]} />
-                  <br />
-                </div>
-              );
-            })}
-            {ctgryList.length<=0?<h1>No posts yet!!!</h1>:""}
+            {ctgryList &&
+              ctgryList.map((data, index) => {
+                return (
+                  <div>
+                    <PostContent post={data} cont={ctgryList[index]} />
+                    <br />
+                  </div>
+                );
+              })}
+            {ctgryList.length <= 0 ? <h1>No posts yet!!!</h1> : ""}
           </div>
         </div>
       </div>

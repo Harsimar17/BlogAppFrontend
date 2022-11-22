@@ -5,51 +5,50 @@ import { allPost, deletePost } from "../services/Service";
 import PostContent from "./PostContent";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "./Spinner";
+import { useContext } from "react";
+import cont from "../services/Context";
 export default function AllPost() {
+  const [srch, setsrch] = useState("");
   const [posts, setposts] = useState({
     content: [],
     totalelement: "",
     lpage: false,
     pnumber: "",
   });
+
   const [cpage, setcpage] = useState(0);
+  const context = useContext(cont);
   useEffect(() => {
     withPagin(cpage);
-  }, [cpage]);
+  }, [, cpage]);
+  useEffect(() => {
+    setsrch(context.helper.name);
+  }, [context.helper.name]);
 
   const withPagin = (pageNumber = 0, pageSize = 5) => {
     allPost(pageNumber, pageSize).then((resp) => {
-      console.log(resp);
       setposts({
         content: [...posts.content, ...resp.content],
         totalelement: resp.totalelements,
         lpage: resp.lastpage,
         pnumber: resp.pagenumber,
       });
-      //   console.log(resp);
     });
   };
   const delPost = (post) => {
-    // console.log(pstsUser.id);
     deletePost(post.id).then((resp) => {
-      console.log(resp);
       let newPost = posts.content.filter((p) => p.id !== post.id);
       setposts({ ...posts, content: newPost });
     });
   };
   const fetchmoreDetails = () => {
     setcpage(cpage + 1);
-    console.log(posts.totalelement);
   };
 
   return (
     <Base>
-      {/* <h1 className="badge text-bg-dark">
-        <span className=" " style={{ fontSize: "60px" }}>
-          All New Posts...
-        </span>
-      </h1> */}
       <div className="container">
+        {srch}
         <h1 align="left" style={{ marginLeft: "13px" }}>
           <span className="badge text-bg-dark">
             {posts.totalelement} NEW POSTS
@@ -61,16 +60,16 @@ export default function AllPost() {
           dataLength={posts.content.length}
           loader={<Spinner />}
         >
-          {posts.content.map((post, index) => (
-            <div>
-              <PostContent
-                post={post}
-                cont={posts.content[index]}
-                del={delPost}
-              />
-              <br />
-            </div>
-          ))}
+          {posts.content
+            .filter((val) =>
+              val.title.toLowerCase().includes(srch.toLowerCase())
+            )
+            .map((post) => (
+              <div>
+                <PostContent post={post} del={delPost} />
+                <br />
+              </div>
+            ))}
         </InfiniteScroll>
 
         {/* <nav aria-label="Page navigation example">

@@ -27,7 +27,6 @@ export const imageHandle = (image, pid) => {
 };
 export const profileImage = (image, uid) => {
   let formData = new FormData();
-  // console.log(formData.getAll.length);
   console.log();
   formData.append("image", image);
   formData.set("Accept", "application/json");
@@ -36,7 +35,6 @@ export const profileImage = (image, uid) => {
     .put(`/profile/image/${uid}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data;",
-        
       },
     })
     .then((resp) => resp.data);
@@ -52,4 +50,8 @@ export const deletePost = (postid) => {
 export const updatePost = (postdata, pid) => {
   console.log(postdata);
   return paxios.put(`/api/updatePost/${pid}`, postdata).then((res) => res.data);
+};
+
+export const deleteAccount = (uid) => {
+  return paxios.delete(`/${uid}`).then((resp) => resp.data);
 };

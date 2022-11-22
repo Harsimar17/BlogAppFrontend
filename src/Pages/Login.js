@@ -26,14 +26,19 @@ export default function Login() {
       toast.error("Username or Password is Empty!!");
       return;
     }
-    loginU(loginDetails).then((token) => {
-      console.log(token);
-      doLogin(token, () => {
-        navigate("/user/dashboard");
-      });
+    loginU(loginDetails)
+      .then((token) => {
+        console.log(token);
+        doLogin(token, () => {
+          navigate("/user/dashboard");
+        });
 
-      toast.success("success");
-    });
+        toast.success("success");
+      })
+      .catch((err) => {
+        toast.error("Please enter correct details!!");
+        return;
+      });
   };
 
   return (
@@ -41,13 +46,17 @@ export default function Login() {
       <div className="container " style={{ "margin-top": "50px" }}>
         <div className="card">
           <div className="card-body">
-          <h1  align='left'><i>Login here...</i></h1><br/>
+            <h1 align="left">
+              <i>Login here...</i>
+            </h1>
+            <br />
             <p className="card-text">
               <form onSubmit={submitForm}>
                 <div className="mb-3" align="left">
                   <label for="exampleInputEmail1" className="form-label">
                     <h3>Email address</h3>
                   </label>
+
                   <input
                     onChange={(e) => handlChange(e, "username")}
                     type="email"
@@ -57,10 +66,21 @@ export default function Login() {
                     aria-describedby="emailHelp"
                     value={loginDetails.username}
                   />
-                  
+                  {loginDetails.username !== "" ? (
+                    <p
+                      style={{
+                        backgroundColor: "lightgoldenrodyellow",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      {loginDetails.username}
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div className="mb-3" align="left">
-                  <label for="exampleInputPassword1" className="form-label" >
+                  <label for="exampleInputPassword1" className="form-label">
                     <h3>Password</h3>
                   </label>
                   <input
@@ -71,6 +91,18 @@ export default function Login() {
                     placeholder="Enter password"
                     value={loginDetails.password}
                   />
+                  {loginDetails.password !== "" ? (
+                    <p
+                      style={{
+                        backgroundColor: "lightgoldenrodyellow",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      {loginDetails.password}
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <button type="submit" className="btn btn-dark">

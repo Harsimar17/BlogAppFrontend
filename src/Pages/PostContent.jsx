@@ -1,26 +1,23 @@
 import React from "react";
+import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 import { fetchDetails, isLogin } from "../auth/Index";
 import { BASE_URL } from "../services/Helper";
-// import { allPost } from "../services/Service";
-// import Modalcomp from "./Modal";
-// import Modal from "./Modal";
-export default function PostContent({ post, cont, del }) {
+export default function PostContent({ post, del }) {
   const [uid, setuid] = useState(null);
   const [pid, setpid] = useState(null);
-
+  const ref = useRef();
   useEffect(() => {
-    // console.log(post);
     setuid(fetchDetails().id);
     setpid(post.u.id);
-    console.log(window.location.pathname);
-    // let a = window.location.pathname + "";
-    // console.log(a.includes("category"));
-
-    // console.log(post.u.id);
+    let date = new Date(post.date);
+    let ndate = new Date();
+    let timediff = ndate.getTime() - date.getTime();
+    let daydiff = Math.ceil(timediff / (1000 * 3600 * 24));
+    ref.current = daydiff;
   }, [post]);
 
   return (
@@ -30,20 +27,23 @@ export default function PostContent({ post, cont, del }) {
         style={{ backgroundColor: "white" }}
       >
         <div className="card-body">
+          {ref.current < 2 && (
+            <span class="badge text-bg-danger ">New Post</span>
+          )}
+
           <h1 className="card-title">{post.title.toUpperCase()} </h1>
           <div className="image">
             <img
-              src={`${BASE_URL}/api/post/show/${cont.imagename}`}
+              src={`${BASE_URL}/api/post/show/${post.imagename}`}
               className="card-img-top imgsh"
               alt="..."
-              // style={{boxSizing:"10px"}}
             />
           </div>
           <p
             className="card-text "
             dangerouslySetInnerHTML={{
               __html:
-                post.content.substring(0, post.content.length / 4).toString() +
+                post.content.substring(0, post.content.length / 2).toString() +
                 "....",
             }}
           ></p>

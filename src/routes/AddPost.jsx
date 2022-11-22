@@ -12,11 +12,10 @@ import {
 import { cAt } from "../services/Category-service";
 import JoditEditor from "jodit-react";
 import { createPost } from "../services/create-Post";
-import { fetchDetails, isLogin } from "../auth/Index";
+import { fetchDetails } from "../auth/Index";
 import { imageHandle, profileImage } from "../services/Service";
 export default function AddPost() {
   const editor = useRef(null);
-  // const [content, setcontent] = useState("");
   const [ct, setct] = useState([]);
   const [fld, setfld] = useState({
     title: "",
@@ -24,11 +23,13 @@ export default function AddPost() {
     categoryid: "",
   });
   const [userDet, setuserDet] = useState(undefined);
-  const [img, setimg] = useState(null);
+  const [img, setimg] = useState({
+    pic: false,
+    src: false,
+  });
   useEffect(() => {
     setuserDet(fetchDetails());
     cAt().then((data) => {
-      // //(data);
       setct(data);
     });
   }, []);
@@ -68,8 +69,7 @@ export default function AddPost() {
     fld["uid"] = userDet.id;
     createPost(fld)
       .then((resp) => {
-        //(resp);
-        imageHandle(img, resp.id).then((resp) => {
+        imageHandle(img.src, resp.id).then((resp) => {
           toast.success("New post created");
         });
         profileImage(img, 13);
@@ -79,9 +79,10 @@ export default function AddPost() {
       });
   };
   const handleImage = (e) => {
-    // setimg(e.target.files[0]);
-    //(e.target.files[0]);
-    setimg(e.target.files[0]);
+    setimg({
+      pic: URL.createObjectURL(e.target.files[0]),
+      src: e.target.files[0],
+    });
   };
   return (
     <div className="wrapper ">
@@ -118,6 +119,28 @@ export default function AddPost() {
               <Label for="formFile">
                 <h3>Select image</h3>
               </Label>
+              <br />
+              {img.pic ? (
+                <img
+                  src={img.pic}
+                  style={{ maxWidth: "10%", marginBottom: "10px" }}
+                  className="rounded-circle img-responsive border border-5 "
+                  alt=""
+                />
+              ) : (
+                <div
+                  style={{
+                    maxWidth: "10%",
+                    height: "100px",
+                    marginBottom: "10px",
+                  }}
+                  className="rounded-circle img-responsive border border-5 text-center"
+                >
+                  <p style={{ marginTop: "20px", fontSize: "13px" }}>
+                    Choose an Image
+                  </p>
+                </div>
+              )}
               <input
                 accept="image/*"
                 className="form-control"

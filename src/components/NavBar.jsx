@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { doLogout, fetchDetails, isLogin } from "../auth/Index";
+import cont from "../services/Context";
 import { BASE_URL } from "../services/Helper";
-// import Modalcomp from "../Pages/Modal";
 import { allPost } from "../services/Service";
-// import { NavLink as ReactLink } from "react-router-dom";
-
-// import { NavLink as REa} from "react-router-dom";
 
 export default function NavBar() {
   const [login, setlogin] = useState(false);
   const navigate = useNavigate();
   const [detail, setdetail] = useState(undefined);
   const [lst, setlst] = useState(undefined);
+  let cvalue = useContext(cont);
   useEffect(() => {
     setlogin(isLogin());
     setdetail(fetchDetails());
-    console.log(fetchDetails().imagename);
     allPost().then((data) => {
       setlst(data);
     });
@@ -29,10 +27,9 @@ export default function NavBar() {
     });
   };
   return (
-    <div className="" >
-      <nav className="navbar-nav ms-auto mb-2 mb-lg-0 nav-item navbar navbar-expand-lg navbar-dark bg-dark fixed-top " > 
+    <div className="">
+      <nav className="navbar-nav ms-auto mb-2 mb-lg-0 nav-item navbar navbar-expand-lg navbar-dark bg-dark fixed-top ">
         <div className="container-fluid bg-dark">
-          {/* <Modalcomp/> */}
           <button
             className="navbar-toggler"
             type="button"
@@ -46,24 +43,35 @@ export default function NavBar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav  mb-2 mb-lg-0">
-              <li className="nav-item" style={{ display: "flex", marginRight: "10px" }}>
+              <li
+                className="nav-item"
+                style={{ display: "flex", marginRight: "10px" }}
+              >
                 <Link className="nav-link active" to="/home">
                   Blog App ({lst ? lst.totalelements : 0})
                 </Link>
-                {/* {isLogin() && <img />} */}
               </li>
-              <li className="nav-item" style={{ display: "flex", marginRight: "10px" }} >
+              <li
+                className="nav-item"
+                style={{ display: "flex", marginRight: "10px" }}
+              >
                 <Link className="nav-link " to="/newFeed">
                   New feed
                 </Link>
               </li>
-              <li className="nav-item" style={{ display: "flex", marginRight: "10px" }}>
+              <li
+                className="nav-item"
+                style={{ display: "flex", marginRight: "10px" }}
+              >
                 <Link className="nav-link" to="/about">
                   About
                 </Link>
               </li>
 
-              <li className="nav-item dropdown" style={{ display: "flex", marginRight: "10px" }}>
+              <li
+                className="nav-item dropdown"
+                style={{ display: "flex", marginRight: "10px" }}
+              >
                 <Link
                   className="nav-link dropdown-toggle"
                   to="#"
@@ -95,9 +103,9 @@ export default function NavBar() {
                 </ul>
               </li>
             </ul>
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 "  >
+            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 ">
               {login === false && (
-                <li className="nav-item" key="lin">
+                <li className="nav-item" key="lin" style={{ display: "flex" }}>
                   <Link className="nav-link " aria-current="page" to="/login">
                     Login
                   </Link>
@@ -105,7 +113,28 @@ export default function NavBar() {
               )}
               {login && (
                 <>
-                  <li className="nav-item" key="hm" style={{ display: "flex", marginRight: "10px" }}>
+                  <li
+                    className="nav-item"
+                    key="hm"
+                    style={{
+                      display: "flex",
+                      marginRight: "10px",
+                      marginTop: "7px",
+                    }}
+                  >
+                    <div className="d-flex">
+                      <input
+                        className="form-control me-2"
+                        type="search"
+                        placeholder="Search any post "
+                        aria-label="Search"
+                        style={{ height: "40px", width: "300px" }}
+                        value={Object.values(cvalue.helper)}
+                        onChange={(e) => {
+                          cvalue.update(e.target.value);
+                        }}
+                      />
+                    </div>
                     <Link
                       className="nav-link "
                       aria-current="page"
@@ -116,7 +145,11 @@ export default function NavBar() {
                   </li>
                   <li
                     className="nav-item"
-                    style={{ display: "flex", marginRight: "10px" }}
+                    style={{
+                      display: "flex",
+                      marginRight: "10px",
+                      marginTop: "7px",
+                    }}
                     key="pg"
                   >
                     <Link
@@ -129,16 +162,21 @@ export default function NavBar() {
                     <Link to={`/user/info/${detail.id}`}>
                       <img
                         width={50}
-                        style={{ marginTop: "2px" }}
+                        style={{ marginTop: "0px" }}
                         id="image-selector"
                         className="rounded-circle img-responsive border border-3 border-success "
                         src={`${BASE_URL}/profile/image/${
                           fetchDetails().imagename
                         }`}
+                        alt=""
                       />
                     </Link>
                   </li>
-                  <li className="nav-item" key="lt" style={{ display: "flex", }}>
+                  <li
+                    className="nav-item check"
+                    key="lt"
+                    style={{ display: "flex", marginTop: "7px" }}
+                  >
                     <a
                       onClick={logOut}
                       className="nav-link "
@@ -151,7 +189,7 @@ export default function NavBar() {
                 </>
               )}
               {login === false && (
-                <li className="nav-item">
+                <li className="nav-item" style={{ display: "flex" }}>
                   <Link className="nav-link " to="/signup">
                     Signup
                   </Link>

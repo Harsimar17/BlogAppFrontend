@@ -20,7 +20,6 @@ export default function Signup() {
       ...data,
       [property]: e.target.value,
     });
-    // console.log(data);
   };
 
   const submitForm = (e) => {
@@ -30,7 +29,6 @@ export default function Signup() {
     Spring(data)
       .then((resp) => {
         toast.success("Registerd successfully");
-        console.log(resp);
         profileImage(img.src, resp.id);
       })
       .catch(() => {
@@ -55,9 +53,18 @@ export default function Signup() {
                       id="image-selector"
                       className="rounded-circle img-responsive border border-5 "
                       src={img.pic ? img.pic : def}
+                      alt=""
+                      required
                     />
-                    <br/>
-                    <p style={{marginTop:"2px"}} className="blockquote-footer">This is a default profile pic.<br/>Click below to change it.</p>
+                    <br />
+                    <p
+                      style={{ marginTop: "2px" }}
+                      className="blockquote-footer"
+                    >
+                      This is a default profile pic.
+                      <br />
+                      Click below to change it.
+                    </p>
                   </div>
                   <br />
 
@@ -76,12 +83,6 @@ export default function Signup() {
                         </div>
                       </div>
                       <div className="col-md-6 mb-4">
-                        {/* <img
-                          style={{ maxWidth: "20%" }}
-                          id="image-selector"
-                          className="rounded-circle img-responsive border border-5 "
-                          src={img.pic?img.pic:def}
-                        /> */}
                         <div className="form-outline">
                           <input
                             onChange={(e) => nameChange(e, "email")}
@@ -139,7 +140,8 @@ export default function Signup() {
                             data.name === "" ||
                             data.about === "" ||
                             data.email === "" ||
-                            data.password === ""
+                            data.password === "" ||
+                            img.pic === false
                               ? true
                               : false
                           }

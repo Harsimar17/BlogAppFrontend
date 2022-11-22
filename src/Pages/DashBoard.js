@@ -8,18 +8,15 @@ import PostContent from "./PostContent";
 export default function DashBoard() {
   const [pstsUser, setpstsUser] = useState([]);
   useEffect(() => {
-    // console.log(fetchDetails().id);
     loadPost();
   }, [pstsUser]);
 
   const loadPost = () => {
     getPostByUser(fetchDetails().id).then((data) => {
-      // console.log(data);
       setpstsUser([...data]);
     });
   };
   const delPost = (post) => {
-    // console.log(pstsUser.id);
     deletePost(post.id).then((resp) => {
       loadPost();
     });

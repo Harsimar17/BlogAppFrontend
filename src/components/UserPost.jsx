@@ -5,6 +5,7 @@ import { BASE_URL, cPost } from "../services/Helper";
 import { onePost } from "../services/Service";
 import { toast } from "react-toastify";
 import Base from "./Base";
+import { useRef } from "react";
 
 function UserPost() {
   const { id } = useParams();
@@ -12,24 +13,25 @@ function UserPost() {
   const [cmnt, setcmnt] = useState({
     comment: "",
   });
+  let ref = useRef();
   useEffect(() => {
     onePost(id).then((resp) => {
       setudata(resp);
-      console.log(resp);
+      let date = new Date(udata.date);
+      let ndate = new Date();
+      let timediff = ndate.getTime() - date.getTime();
+      let daydiff = Math.ceil(timediff / (1000 * 3600 * 24));
+      ref.current = daydiff;
     });
-    // console.log();
   }, [udata, id]);
 
   const printDate = (date) => {
     return new Date(date).toLocaleDateString();
   };
-  
 
   const addComment = () => {
     if (isLogin()) {
-      cPost(cmnt, udata.u.id, udata.id).then((data) => {
-        // console.log(data);
-      });
+      cPost(cmnt, udata.u.id, udata.id).then((data) => {});
     } else {
       toast.error("Sign in required!!");
       return;
@@ -38,7 +40,6 @@ function UserPost() {
   return (
     udata && (
       <Base>
-        {new Date(udata.date).toDateString()}
         <div
           className="card container form-control shadow-sm"
           style={{ width: "60%" }}
@@ -54,13 +55,13 @@ function UserPost() {
           <span className="square border border-dark">
             <img
               src={`${BASE_URL}/api/post/show/${udata.imagename}`}
-              className="card-img-top "
+              className="card-img-top data"
               alt="..."
             />
           </span>
           <div className="card-body">
             <h1
-              className="card-text"
+              className="card-text "
               dangerouslySetInnerHTML={{
                 __html:
                   udata.content[0].toUpperCase() + udata.content.substring(1),
@@ -78,6 +79,10 @@ function UserPost() {
                 <b className="text-dark">
                   {new Date(udata.date).toLocaleTimeString()}
                 </b>
+                <br />
+                <button className="btn btn-success " onClick={window.print}>
+                  Print
+                </button>
               </p>
             </p>
           </div>
@@ -119,7 +124,7 @@ function UserPost() {
             <br />
             <button
               className={`btn btn-dark ${
-                cmnt.comment == "" ? "disabled" : cmnt.comment
+                cmnt.comment === "" ? "disabled" : cmnt.comment
               } `}
               onClick={addComment}
             >

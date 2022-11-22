@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 // import {  CardBody } from "reactstrap";
 import { fetchDetails } from "../auth/Index";
 import Base from "../components/Base";
-import { onePost, updatePost } from "../services/Service";
+import { imageHandle, onePost, updatePost } from "../services/Service";
 import { useRef } from "react";
 // import {  } from "react-toastify";
 import {
@@ -26,15 +26,17 @@ function UpdatePost() {
   const [ct, setct] = useState([]);
   const [post, setpost] = useState(null);
   const navigate = useNavigate();
+  const [img, setimg] = useState({
+    pic: false,
+    src: false,
+  });
   const params = useParams();
   useEffect(() => {
     cAt().then((data) => {
-      // //(data);
       setct(data);
     });
     onePost(Object.values(params))
       .then((res) => {
-        console.log(res);
         setpost({ ...res, ctgryId: res.ct.id });
       })
       .catch((error) => {
@@ -58,19 +60,18 @@ function UpdatePost() {
       ...post,
       [field]: event.target.value,
     });
-    // console.log(post.ctgryId);
-    // console.log(post);
   };
+
   const submitForm = (e) => {
     e.preventDefault();
 
-    // console.log(post.ctgryId);
-    let i = post.ctgryId;
-
-    // console.log(post);
     let npost = post;
-    // console.log(post.ct.id);
-    updatePost({ ...npost, ct: { id: npost.ctgryId } }, npost.id);
+
+    updatePost({ ...npost, ct: { id: npost.ctgryId } }, npost.id).then(() => {
+      imageHandle(img.src, post.id).then(() => {
+        toast.success("Post updated successfully!!");
+      });
+    });
   };
   const updateHtml = () => {
     return (
@@ -111,19 +112,46 @@ function UpdatePost() {
                 <Label for="formFile">
                   <h3>Select image</h3>
                 </Label>
+                <br />
+                {img.pic ? (
+                  <img
+                    src={img.pic}
+                    style={{ maxWidth: "10%", marginBottom: "10px" }}
+                    className="rounded-circle img-responsive border border-5 "
+                    alt=""
+                  />
+                ) : (
+                  <div
+                    style={{
+                      maxWidth: "10%",
+                      height: "100px",
+                      marginBottom: "10px",
+                    }}
+                    className="rounded-circle img-responsive border border-5 text-center"
+                  >
+                    <p style={{ marginTop: "20px", fontSize: "13px" }}>
+                      Choose an Image
+                    </p>
+                  </div>
+                )}
                 <input
                   className="form-control"
                   type="file"
                   id="formFile"
                   multiple
-                  onChange={""}
+                  onChange={(e) =>
+                    setimg({
+                      pic: URL.createObjectURL(e.target.files[0]),
+                      src: e.target.files[0],
+                    })
+                  }
                 />
               </div>
               <div className="my-3" align="left">
                 <Label for="category">
                   <h3>Select category</h3>
                 </Label>
-                {post.ct.title}
+
                 <Input
                   type="select"
                   id="category"
@@ -154,7 +182,6 @@ function UpdatePost() {
   };
   return (
     <Base>
-      {/* {Object.values(params) */}
       <div className="container">{post && updateHtml()}</div>
     </Base>
   );

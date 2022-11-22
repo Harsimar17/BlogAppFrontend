@@ -18,35 +18,38 @@ import UserPost from "./components/UserPost";
 import { doLogout } from "./auth/Index";
 import Category from "./Pages/Category";
 import UpdatePost from "./Pages/UpdatePost";
+import Provider from "./services/Provider";
 function App() {
   // const navigate = useNavigate();
   return (
     <div className="App scroll">
-      <BrowserRouter>
-        {/* <Base /> */}
-        <ToastContainer />
-        <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/post/:id" element={<UserPost />} />
-          {/* {localStorage.getItem("data") ? (
+      <Provider>
+        <BrowserRouter>
+          {/* <Base /> */}
+          <ToastContainer />
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/post/:id" element={<UserPost />} />
+            {/* {localStorage.getItem("data") ? (
             doLogout()
           ) : (
             <Route path="/" element={<Home />} />
           )} */}
-          <Route path="/" element={<Home />} />
-          <Route path="/category/:id" element={<Category />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/newFeed" element={<Home />} />
-          <Route path="/login" element={<Login className="container" />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/service" element={<Services />} />
-          <Route path="/user" element={<User />}>
-            <Route path="dashboard" element={<DashBoard />} />
-            <Route path="info/:id" element={<Userinfo />} />
-            <Route path="update/:id" element={<UpdatePost />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+            <Route path="/" element={<Home />} />
+            <Route path="/category/:id" element={<Category />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/newFeed" element={<Home />} />
+            <Route path="/login" element={<Login className="container" />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/service" element={<Services />} />
+            <Route path="/user" element={<User />}>
+              <Route path="dashboard" element={<DashBoard />} />
+              <Route path="info/:id" element={<Userinfo />} />
+              <Route path="update/:id" element={<UpdatePost />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Provider>
     </div>
   );
 }

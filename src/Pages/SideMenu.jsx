@@ -9,7 +9,6 @@ export default function SideMenu() {
   useEffect(() => {
     cAt().then((resp) => {
       setctgry(resp);
-      console.log(resp);
     });
   }, []);
 
