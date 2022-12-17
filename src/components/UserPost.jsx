@@ -54,9 +54,10 @@ function UserPost() {
           <br />
           <span className="square border border-dark">
             <img
-              src={`${BASE_URL}/api/post/show/${udata.imagename}`}
+              src={`${BASE_URL}/api/post/show/${udata.imagename}/${udata.u.email}`}
               className="card-img-top data"
               alt="..."
+              style={{ height: "800px" }}
             />
           </span>
           <div className="card-body">

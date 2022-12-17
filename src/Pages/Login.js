@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { doLogin } from "../auth/Index";
+import { doLogin, isLogin } from "../auth/Index";
 import Base from "../components/Base";
 import { loginU } from "../services/Service";
-
+import vcont from "../services/VerificationContext";
+import swal from "sweetalert";
 export default function Login() {
   const navigate = useNavigate();
+  const cont = useContext(vcont);
+  useEffect(() => {
+    localStorage.removeItem("data");
+    cont.update(true);
+  }, [cont.helper.flag]);
+
   const [loginDetails, setloginDetails] = useState({
     username: "",
     password: "",
@@ -17,7 +24,6 @@ export default function Login() {
       ...loginDetails,
       [property]: e.target.value,
     });
-    console.log(loginDetails.username);
   };
 
   const submitForm = (e) => {
@@ -28,7 +34,6 @@ export default function Login() {
     }
     loginU(loginDetails)
       .then((token) => {
-        console.log(token);
         doLogin(token, () => {
           navigate("/user/dashboard");
         });
@@ -108,6 +113,15 @@ export default function Login() {
                 <button type="submit" className="btn btn-dark">
                   Submit
                 </button>
+                <br />
+                <br />
+                <a
+                  href="data/forgot"
+                  className=""
+                  style={{ pointerEvents: `${isLogin() ? "none" : ""} ` }}
+                >
+                  <u className="text text-success ">Forgot password</u>
+                </a>
               </form>
             </p>
           </div>

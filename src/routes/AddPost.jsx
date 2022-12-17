@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import swal from "sweetalert";
 import {
   Button,
   Card,
@@ -13,7 +14,7 @@ import { cAt } from "../services/Category-service";
 import JoditEditor from "jodit-react";
 import { createPost } from "../services/create-Post";
 import { fetchDetails } from "../auth/Index";
-import { imageHandle, profileImage } from "../services/Service";
+import { imageHandle } from "../services/Service";
 export default function AddPost() {
   const editor = useRef(null);
   const [ct, setct] = useState([]);
@@ -29,6 +30,7 @@ export default function AddPost() {
   });
   useEffect(() => {
     setuserDet(fetchDetails());
+
     cAt().then((data) => {
       setct(data);
     });
@@ -67,16 +69,26 @@ export default function AddPost() {
       return;
     }
     fld["uid"] = userDet.id;
-    createPost(fld)
-      .then((resp) => {
-        imageHandle(img.src, resp.id).then((resp) => {
-          toast.success("New post created");
-        });
-        profileImage(img, 13);
-      })
-      .catch(() => {
-        toast.error("Some error occured!!");
-      });
+    swal({
+      title: "Are you sure?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((isconf) => {
+      if (isconf) {
+        createPost(fld)
+          .then((resp) => {
+            imageHandle(img.src, resp.id, userDet.email).then((resp) => {
+              toast.success("New post created");
+            });
+          })
+          .catch(() => {
+            toast.error("Some error occured!!");
+          });
+      } else {
+        swal("Your imaginary file is safe!");
+      }
+    });
   };
   const handleImage = (e) => {
     setimg({

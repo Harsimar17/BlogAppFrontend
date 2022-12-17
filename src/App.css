@@ -72,8 +72,9 @@ label {
 
 @media screen and (max-width: 600px) {
   .check {
-
     margin: 0px;
-    
   }
+}
+.check{
+  cursor: not-allowed;
 }

@@ -3,12 +3,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-// import {  CardBody } from "reactstrap";
 import { fetchDetails } from "../auth/Index";
 import Base from "../components/Base";
 import { imageHandle, onePost, updatePost } from "../services/Service";
 import { useRef } from "react";
-// import {  } from "react-toastify";
 import {
   Button,
   Card,
@@ -68,7 +66,7 @@ function UpdatePost() {
     let npost = post;
 
     updatePost({ ...npost, ct: { id: npost.ctgryId } }, npost.id).then(() => {
-      imageHandle(img.src, post.id).then(() => {
+      imageHandle(img.src, post.id,fetchDetails().email).then(() => {
         toast.success("Post updated successfully!!");
       });
     });

@@ -20,7 +20,7 @@ export default function AllPost() {
   const context = useContext(cont);
   useEffect(() => {
     withPagin(cpage);
-  }, [, cpage]);
+  }, [cpage]);
   useEffect(() => {
     setsrch(context.helper.name);
   }, [context.helper.name]);
@@ -48,7 +48,6 @@ export default function AllPost() {
   return (
     <Base>
       <div className="container">
-        {srch}
         <h1 align="left" style={{ marginLeft: "13px" }}>
           <span className="badge text-bg-dark">
             {posts.totalelement} NEW POSTS

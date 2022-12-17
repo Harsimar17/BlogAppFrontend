@@ -19,7 +19,7 @@ export default function Userinfo() {
     setimg(e.target.files[0]);
   };
   const saveProfileImage = (e) => {
-    profileImage(img, userDetails.id);
+    profileImage(img, userDetails.id, userDetails.email);
   };
 
   const data = () => {
@@ -49,7 +49,7 @@ export default function Userinfo() {
                 style={{ maxWidth: "20%" }}
                 id="image-selector"
                 className="rounded-circle img-responsive border border-5 "
-                src={`${BASE_URL}/profile/image/${userDetails.imagename}`}
+                src={`${BASE_URL}/profile/image/${userDetails.imagename}/${userDetails.email}`}
                 alt=""
               />
               <br />

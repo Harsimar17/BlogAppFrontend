@@ -24,12 +24,10 @@ export default function Signup() {
 
   const submitForm = (e) => {
     e.preventDefault();
-    console.log(data);
-
     Spring(data)
       .then((resp) => {
         toast.success("Registerd successfully");
-        profileImage(img.src, resp.id);
+        profileImage(img.src, resp.id, data.email);
       })
       .catch(() => {
         toast.error("Therre is some error");

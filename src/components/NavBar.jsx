@@ -27,8 +27,10 @@ export default function NavBar() {
     });
   };
   return (
-    <div className="">
-      <nav className="navbar-nav ms-auto mb-2 mb-lg-0 nav-item navbar navbar-expand-lg navbar-dark bg-dark fixed-top ">
+    <div className="" style={{}}>
+      <nav
+        className={`navbar-nav ms-auto mb-2 mb-lg-0 ${isLogin()? "py-0":""} nav-item navbar navbar-expand-lg navbar-dark bg-dark fixed-top `}
+      >
         <div className="container-fluid bg-dark">
           <button
             className="navbar-toggler"
@@ -44,6 +46,7 @@ export default function NavBar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav  mb-2 mb-lg-0">
               <li
+                key="1"
                 className="nav-item"
                 style={{ display: "flex", marginRight: "10px" }}
               >
@@ -52,6 +55,7 @@ export default function NavBar() {
                 </Link>
               </li>
               <li
+                key="2"
                 className="nav-item"
                 style={{ display: "flex", marginRight: "10px" }}
               >
@@ -60,6 +64,7 @@ export default function NavBar() {
                 </Link>
               </li>
               <li
+                key="3"
                 className="nav-item"
                 style={{ display: "flex", marginRight: "10px" }}
               >
@@ -69,6 +74,7 @@ export default function NavBar() {
               </li>
 
               <li
+                key="4"
                 className="nav-item dropdown"
                 style={{ display: "flex", marginRight: "10px" }}
               >
@@ -82,17 +88,17 @@ export default function NavBar() {
                   Dropdown
                 </Link>
                 <ul className="dropdown-menu">
-                  <li>
+                  <li key="5">
                     <a className="dropdown-item" href="/service">
                       Service
                     </a>
                   </li>
-                  <li>
+                  <li key="6">
                     <a className="dropdown-item" href="/home">
                       Another action
                     </a>
                   </li>
-                  <li>
+                  <li key="7">
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
@@ -119,21 +125,23 @@ export default function NavBar() {
                     style={{
                       display: "flex",
                       marginRight: "10px",
-                      marginTop: "7px",
+                      marginTop: "14px",
                     }}
                   >
                     <div className="d-flex">
-                      <input
-                        className="form-control me-2"
-                        type="search"
-                        placeholder="Search any post "
-                        aria-label="Search"
-                        style={{ height: "40px", width: "300px" }}
-                        value={Object.values(cvalue.helper)}
-                        onChange={(e) => {
-                          cvalue.update(e.target.value);
-                        }}
-                      />
+                      {window.location.pathname.includes("/home") && (
+                        <input
+                          className="form-control me-2"
+                          type="search"
+                          placeholder="Search any post "
+                          aria-label="Search"
+                          style={{ height: "40px", width: "300px" }}
+                          value={Object.values(cvalue.helper)}
+                          onChange={(e) => {
+                            cvalue.update(e.target.value);
+                          }}
+                        />
+                      )}
                     </div>
                     <Link
                       className="nav-link "
@@ -148,7 +156,7 @@ export default function NavBar() {
                     style={{
                       display: "flex",
                       marginRight: "10px",
-                      marginTop: "7px",
+                      marginTop: "14px",
                     }}
                     key="pg"
                   >
@@ -162,12 +170,13 @@ export default function NavBar() {
                     <Link to={`/user/info/${detail.id}`}>
                       <img
                         width={50}
-                        style={{ marginTop: "0px" }}
+                        height={50}
+                        style={{ marginTop: "0px", marginBottom: "7px" }}
                         id="image-selector"
                         className="rounded-circle img-responsive border border-3 border-success "
                         src={`${BASE_URL}/profile/image/${
                           fetchDetails().imagename
-                        }`}
+                        }/${fetchDetails().email}`}
                         alt=""
                       />
                     </Link>
@@ -175,7 +184,7 @@ export default function NavBar() {
                   <li
                     className="nav-item check"
                     key="lt"
-                    style={{ display: "flex", marginTop: "7px" }}
+                    style={{ display: "flex", marginTop: "14px" }}
                   >
                     <a
                       onClick={logOut}
