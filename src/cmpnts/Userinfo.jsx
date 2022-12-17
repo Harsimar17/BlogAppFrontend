@@ -4,8 +4,8 @@ import { useState } from "react";
 import { Button, Card, CardBody, Container } from "reactstrap";
 import { fetchDetails } from "../auth/Index";
 import { BASE_URL } from "../services/Helper";
-import FinalUserInfo from "../cmpnts/FinalUserInfo";
-import Base from "../cmpnts/Base";
+import FinalUserInfo from "./FinalUserInfo";
+import Base from "./Base";
 import { profileImage } from "../services/Service";
 
 export default function Userinfo() {

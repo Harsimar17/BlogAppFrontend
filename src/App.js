@@ -11,10 +11,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import User from "./cmpnts/User";
 import DashBoard from "./Pages/DashBoard";
-import Userinfo from "./components/Userinfo";
+import Userinfo from "./cmpnts/Userinfo";
 // import AllPost from "./Pages/AllPost";
 
-import UserPost from "./components/UserPost";
+import UserPost from "./cmpnts/UserPost";
 import { doLogout } from "./auth/Index";
 import Category from "./cmpnts/Category";
 import UpdatePost from "./Pages/UpdatePost";
