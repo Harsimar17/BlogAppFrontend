@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { fetchDetails } from "../auth/Index";
-import Base from "../components/Base";
-import AddPost from "../routes/AddPost";
+import Base from "../cmpnts/Base";
+import AddPost from "../cmpnts/AddPost";
 import { deletePost, getPostByUser } from "../services/Service";
-import PostContent from "./PostContent";
+import PostContent from "../cmpnts/PostContent";
 
 export default function DashBoard() {
   const [pstsUser, setpstsUser] = useState([]);

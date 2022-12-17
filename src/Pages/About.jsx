@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { fetchDetails } from "../auth/Index";
-import Base from "../components/Base";
+import Base from "../cmpnts/Base";
 import { deletePost, getPostByUser } from "../services/Service";
-import PostContent from "./PostContent";
+import PostContent from "../cmpnts/PostContent";
 
 export default function About() {
   const [pstsUser, setpstsUser] = useState([]);

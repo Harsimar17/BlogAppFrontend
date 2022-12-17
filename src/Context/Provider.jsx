@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import cont from "../services/Context";
+import cont from "./Context";
 function Provider(props) {
   const [helper, sethelper] = useState({
     name: "",

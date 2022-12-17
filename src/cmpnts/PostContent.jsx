@@ -15,7 +15,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { BASE_URL } from "../services/Helper";
-import Spinner from "./Spinner";
+import Spinner from "../Pages/Spinner";
 import { addLike, checkLike, getLikes } from "../services/Service";
 
 export default function PostContent({ post, del }) {

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
-import Base from "../components/Base";
+import Base from "../cmpnts/Base";
 import { otpVerify } from "../services/Service";
 
 function Otp() {

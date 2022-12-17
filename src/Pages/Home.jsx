@@ -1,6 +1,6 @@
 import React from "react";
-import Base from "../components/Base";
-import AllPost from "./AllPost";
+import Base from "../cmpnts/Base";
+import AllPost from "../cmpnts/AllPost";
 import SideMenu from "./SideMenu";
 
 export default function Home() {

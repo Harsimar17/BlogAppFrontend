@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import Base from "../components/Base";
+import Base from "./Base";
 import { postByctgryId } from "../services/Category-service";
 import PostContent from "./PostContent";
-import SideMenu from "./SideMenu";
+import SideMenu from "../Pages/SideMenu";
 
 export default function Category() {
   const params = useParams();

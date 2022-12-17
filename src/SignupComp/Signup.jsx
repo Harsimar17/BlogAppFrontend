@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { profileImage, Spring } from "../services/Service";
 import { toast } from "react-toastify";
-import def from "./default.jpg";
-import Base from "../components/Base";
+import def from "../Images/default.jpg";
+import Base from "../cmpnts/Base";
 export default function Signup() {
   const [img, setimg] = useState({
     pic: false,

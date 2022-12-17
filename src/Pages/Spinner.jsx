@@ -1,5 +1,5 @@
 import React from "react";
-import spin from "./grey.gif";
+import spin from "../Images/grey.gif";
 export default function Spinner() {
   return (
     <div>

@@ -4,7 +4,7 @@ import { isLogin } from "../auth/Index";
 import { BASE_URL, cPost } from "../services/Helper";
 import { onePost } from "../services/Service";
 import { toast } from "react-toastify";
-import Base from "./Base";
+import Base from "../cmpnts/Base";
 import { useRef } from "react";
 
 function UserPost() {

@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { doLogin, isLogin } from "../auth/Index";
-import Base from "../components/Base";
+import Base from "../cmpnts/Base";
 import { loginU } from "../services/Service";
-import vcont from "../services/VerificationContext";
+import vcont from "../Context/VerificationContext";
 import swal from "sweetalert";
 export default function Login() {
   const navigate = useNavigate();

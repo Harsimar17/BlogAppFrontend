@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { fetchDetails } from "../auth/Index";
-import Base from "../components/Base";
+import Base from "../cmpnts/Base";
 import { imageHandle, onePost, updatePost } from "../services/Service";
 import { useRef } from "react";
 import {

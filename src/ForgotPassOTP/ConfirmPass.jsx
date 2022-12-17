@@ -1,9 +1,9 @@
 import React from "react";
 import { useContext } from "react";
 import { useState } from "react";
-import Base from "../components/Base";
+import Base from "../cmpnts/Base";
 import { passUpdate } from "../services/Service";
-import vcont from "../services/VerificationContext";
+import vcont from "../Context/VerificationContext";
 
 function ConfirmPass() {
   const [pass, setpass] = useState({});

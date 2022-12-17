@@ -4,26 +4,26 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
-import Login from "./Pages/Login";
-import Signup from "./Pages/Signup";
+import Login from "./LoginComp/Login";
+import Signup from "./SignupComp/Signup";
 import Services from "./Pages/Services";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import User from "./Pages/User";
+import User from "./cmpnts/User";
 import DashBoard from "./Pages/DashBoard";
 import Userinfo from "./components/Userinfo";
 // import AllPost from "./Pages/AllPost";
 
 import UserPost from "./components/UserPost";
 import { doLogout } from "./auth/Index";
-import Category from "./Pages/Category";
+import Category from "./cmpnts/Category";
 import UpdatePost from "./Pages/UpdatePost";
-import Provider from "./services/Provider";
-import Forgot from "./Pages/Forgot";
-import Otp from "./Pages/Otp";
-import Passchange from "./Pages/Passchange";
-import Vprovider from "./services/Vprovider";
-import ConfirmPass from "./Pages/ConfirmPass";
+import Provider from "./Context/Provider";
+import Forgot from "./ForgotPassOTP/Forgot";
+import Otp from "./ForgotPassOTP/Otp";
+import Passchange from "./ForgotPassOTP/Passchange";
+import Vprovider from "./Context/Vprovider";
+import ConfirmPass from "./ForgotPassOTP/ConfirmPass";
 function App() {
   // const navigate = useNavigate();
   window.onunload = function () {

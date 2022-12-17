@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
-import Base from "../components/Base";
+import Base from "./Base";
 import { allPost, deletePost } from "../services/Service";
 import PostContent from "./PostContent";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Spinner from "./Spinner";
+import Spinner from "../Pages/Spinner";
 import { useContext } from "react";
-import cont from "../services/Context";
+import cont from "../Context/Context";
 export default function AllPost() {
   const [srch, setsrch] = useState("");
   const [posts, setposts] = useState({

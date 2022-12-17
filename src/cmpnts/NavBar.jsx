@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { doLogout, fetchDetails, isLogin } from "../auth/Index";
-import cont from "../services/Context";
+import cont from "../Context/Context";
 import { BASE_URL } from "../services/Helper";
 import { allPost } from "../services/Service";
 
